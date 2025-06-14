@@ -73,7 +73,7 @@
         {block name='page_header_container'}
           {block name='page_header'}
             <div class="product-page-header">
-              <h1 class="h1">{block name='page_title'}{$product.name}{/block}</h1>
+              <h1 class="h1 custom-product-title">{block name='page_title'}{$product.name}{/block}</h1>
               <div class="custom-product-category">{$product.category_name}</div>
             </div>
           {/block}
@@ -81,7 +81,7 @@
 
         <div class="product-information">
           {block name='product_description_short'}
-            <div id="product-description-short-{$product.id}" class="product-description">
+            <div id="product-description-short-{$product.id}" class="product-description mb-2">
               {$product.description_short nofilter}</div>
           {/block}
 
@@ -130,6 +130,14 @@
 
                 {block name='product_add_to_cart'}
                   {include file='catalog/_partials/product-add-to-cart.tpl'}
+                {/block}
+
+                {block name='share_buttons'}
+                  {hook h='displayProductAdditionalInfo' product=$product mod="ps_sharebuttons"}
+                {/block}
+
+                {block name='email_alerts'}
+                  {hook h='displayProductAdditionalInfo' product=$product mod="ps_emailalerts"}
                 {/block}
 
                 {* Input to refresh product HTML removed, block kept for compatibility with themes *}

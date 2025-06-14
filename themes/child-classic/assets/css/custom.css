@@ -45,9 +45,73 @@ body {
     color: #7a7a7a;
 }
 
-#product .product-images .thumb-container .thumb.selected,
-#product .product-images .thumb-container .thumb:hover {
+#product .product-container .product-images .thumb-container .thumb.selected,
+#product .product-container .product-images .thumb-container .thumb:hover {
     border: 1px solid #e8e8e8;
+}
+
+#product .product-container .product-page-header .custom-product-title {
+    margin-top: 3rem;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 30px;
+    text-transform: unset;
+}
+
+#product .product-container .product-page-header .custom-product-category {
+    margin-bottom: 1.5rem;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #9a9a9a;
+    text-transform: uppercase;
+}
+
+#product .product-container .product-information .product-description p {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #232323;
+}
+
+#product .product-container .product-information .product-prices .product-discount {
+    margin-bottom: .8rem;
+}
+
+#product .product-container .product-information .product-prices .product-discount .regular-price {
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+#product .product-container .product-information .product-prices .product-price {
+    margin-bottom: 0;
+}
+
+#product .product-container .product-information .product-prices .product-price .current-price {
+    margin-bottom: 0;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 35px;
+    color: #000000;
+}
+
+#product .product-container .product-information .product-prices .product-price .current-price .discount {
+    display: inline-block;
+    margin-left: 26px;
+    padding: 5px 10px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 18px;
+    text-transform: uppercase;
+    background: #f49dd8;
+}
+
+#product .product-container .product-information .product-prices .tax-shipping-delivery-label {
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 20px;
 }
 
 .star-content div.star,

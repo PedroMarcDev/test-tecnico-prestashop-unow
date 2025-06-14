@@ -23,27 +23,25 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 
-{if $post_allowed}
-  <div class="product-comments-additional-info d-flex align-items-center">
-    <div class="additional-links d-flex">
-      {include file='module:productcomments/views/templates/hook/average-grade-stars.tpl' grade=$average_grade}
-      <a class="link-comment btn btn-sm pl-0 pr-1" href="#product-comments-list-header">
-        {if $nb_comments != 0}
-          {l s='Ver la opinión' d='Modules.Productcomments.Shop'}
-        {else}
-          {l s='No hay opiniones de momento' d='Modules.Productcomments.Shop'}
-        {/if}
-      </a>
-    </div>
-    <div id="rating-snippets">
-        <span class="average-rating">{l s='Valoración media:' d='Modules.Productcomments.Shop'} {$average_grade}/5</span>
-        <span class="total-reviews">{l s='Nº valoraciones:' d='Modules.Productcomments.Shop'} {$nb_comments}</span>
-    </div>
-
-    {* Rich snippet rating*}
-    <div itemprop="aggregateRating" itemtype="http://schema.org/AggregateRating" itemscope>
-      <meta itemprop="reviewCount" content="{$nb_comments}" />
-      <meta itemprop="ratingValue" content="{$average_grade}" />
-    </div>
+<div class="product-comments-additional-info d-flex align-items-center">
+  <div class="additional-links d-flex">
+    {include file='module:productcomments/views/templates/hook/average-grade-stars.tpl' grade=$average_grade}
+    <a class="link-comment btn btn-sm pl-0 pr-1" href="#product-comments-list-header">
+      {if $nb_comments != 0}
+        {l s='Ver la opinión' d='Modules.Productcomments.Shop'}
+      {else}
+        {l s='No hay opiniones de momento' d='Modules.Productcomments.Shop'}
+      {/if}
+    </a>
   </div>
-{/if}
+  <div id="rating-snippets">
+    <span class="average-rating">{l s='Valoración media:' d='Modules.Productcomments.Shop'} {$average_grade}/5</span>
+    <span class="total-reviews">{l s='Nº valoraciones:' d='Modules.Productcomments.Shop'} {$nb_comments}</span>
+  </div>
+
+  {* Rich snippet rating*}
+  <div itemprop="aggregateRating" itemtype="http://schema.org/AggregateRating" itemscope>
+    <meta itemprop="reviewCount" content="{$nb_comments}" />
+    <meta itemprop="ratingValue" content="{$average_grade}" />
+  </div>
+</div>

@@ -114,6 +114,34 @@ body {
     line-height: 20px;
 }
 
+#product .product-container .product-information .product-comments-additional-info {
+    flex-direction: column;
+    margin: -20px 0 20px;
+}
+
+#product .product-container .product-information .product-comments-additional-info .comments-note {
+    margin-bottom: 0;
+}
+
+#product .product-container .product-information .product-comments-additional-info .comments-note .link-comment,
+#product .product-container .product-information .product-comments-additional-info #rating-snippets {
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #7a7a7a;
+}
+
+#product .product-container .product-information .product-comments-additional-info .grade-stars {
+    min-width: 140px;
+    height: 30px;
+}
+
+#product .product-container .product-information .product-comments-additional-info .grade-stars .star-content {
+    top: 10px;
+    left: -6px;
+    margin-left: 0;
+}
+
 .star-content div.star,
 .star-content div.star-on, .star-content div.star-hover {
     background: none !important;
@@ -123,12 +151,12 @@ body {
     content: url(../img/empty-star.svg);
     display: block;
     width: 26px;
-    height: 31px;
+    height: 30px;
 }
 
 .star-content div.star-on, .star-content div.star-hover {
     content: url(../img/full-star.svg);
     display: block;
     width: 26px;
-    height: 31px;
+    height: 30px;
 }

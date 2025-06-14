@@ -23,8 +23,14 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  *}
 
-{if $nb_comments != 0}
-  <div class="comments-note">
-    <div class="grade-stars" data-grade="{$grade}"></div>
-  </div>
-{/if}
+
+<div class="comments-note">
+  <div class="grade-stars" data-grade="{$grade}"></div>
+  <a class="link-comment btn btn-sm pl-0 pr-1" href="#product-comments-list-header">
+    {if $nb_comments != 0}
+      {l s='Ver la opinión' d='Modules.Productcomments.Shop'}
+    {else}
+      {l s='No hay opiniones de momento' d='Modules.Productcomments.Shop'}
+    {/if}
+  </a>
+</div>

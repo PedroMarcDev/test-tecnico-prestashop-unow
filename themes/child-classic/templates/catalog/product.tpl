@@ -136,6 +136,10 @@
                   {hook h='displayProductAdditionalInfo' product=$product mod="ps_sharebuttons"}
                 {/block}
 
+                {block name='wishlist'}
+                  {hook h='displayProductActions' product=$product mod="blockwishlist"}
+                {/block}
+
                 {block name='email_alerts'}
                   {hook h='displayProductAdditionalInfo' product=$product mod="ps_emailalerts"}
                 {/block}

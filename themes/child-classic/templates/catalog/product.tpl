@@ -154,7 +154,9 @@
       </div>
     </div>
 
-
+    <div class="product-details-title-container">
+        <span>{l s='Información' d='Shop.Theme.Catalog'}</span>
+    </div>
     {block name='product_tabs'}
       <div class="tabs">
         <ul class="nav nav-tabs" role="tablist">
@@ -164,19 +166,22 @@
                 href="#description" role="tab" aria-controls="description" {if $product.description} aria-selected="true"
                 {/if}>{l s='Description' d='Shop.Theme.Catalog'}</a>
             </li>
+            <label class="tab-separator"> | </label>
           {/if}
           <li class="nav-item">
             <a class="nav-link{if !$product.description} active js-product-nav-active{/if}" data-toggle="tab"
               href="#product-details" role="tab" aria-controls="product-details" {if !$product.description}
-              aria-selected="true" {/if}>{l s='Product Details' d='Shop.Theme.Catalog'}</a>
+              aria-selected="true" {/if}>{l s='Detalles' d='Shop.Theme.Catalog'}</a>
           </li>
           {if $product.attachments}
+            <label class="tab-separator"> | </label>
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#attachments" role="tab"
                 aria-controls="attachments">{l s='Attachments' d='Shop.Theme.Catalog'}</a>
             </li>
           {/if}
           {foreach from=$product.extraContent item=extra key=extraKey}
+            <label class="tab-separator"> | </label>
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#extra-{$extraKey}" role="tab"
                 aria-controls="extra-{$extraKey}">{$extra.title}</a>
@@ -230,7 +235,7 @@
     {block name='product_accessories'}
       {if $accessories}
         <section class="product-accessories clearfix">
-          <p class="h5 text-uppercase">{l s='You might also like' d='Shop.Theme.Catalog'}</p>
+          <p class="h5 product-accessories-title">{l s='Productos relacionados' d='Shop.Theme.Catalog'}</p>
           <div class="products row">
             {foreach from=$accessories item="product_accessory" key="position"}
               {block name='product_miniature'}

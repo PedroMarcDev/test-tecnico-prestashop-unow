@@ -141,7 +141,9 @@
                 {/block}
 
                 {block name='email_alerts'}
-                  {hook h='displayProductAdditionalInfo' product=$product mod="ps_emailalerts"}
+                  <div class="mail-alerts-container">
+                    {hook h='displayProductAdditionalInfo' product=$product mod="ps_emailalerts"}
+                  </div>
                 {/block}
 
                 {* Input to refresh product HTML removed, block kept for compatibility with themes *}

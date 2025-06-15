@@ -141,9 +141,9 @@ class Csvimporter extends Module
 
             $categories = $this->handleCategories($product['Categorias']);
 
-            echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
-                var_dump($manufacturer);
-            echo '</pre></div>';
+            // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
+            //     var_dump($manufacturer);
+            // echo '</pre></div>';
         }
 
         $this->context->controller->confirmations[] = $this->l('Importación completada con éxito');
@@ -198,6 +198,14 @@ class Csvimporter extends Module
 
             $checkCategoryExists = Db::getInstance()->executeS($catSql);
 
+            // $formattedCat = strtr($category, " ", "-");
+
+            // $newCatFormatter = str_replace(",", "", $formattedCat);
+
+            // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
+            //     var_dump($newCatFormatter);
+            // echo '</pre></div>';
+
             if (!$checkCategoryExists) {
                 $formattedCat = strtr($category, " ", "-");
                 $newCatFormatter = str_replace(",", "", $formattedCat);
@@ -205,6 +213,7 @@ class Csvimporter extends Module
                 $newCategory->name = array((int)Configuration::get('PS_LANG_DEFAULT') => $category);
                 $newCategory->id_shop_default = 1;
                 $newCategory->id_parent = Configuration::get('PS_HOME_CATEGORY');
+                $newCategory->link_rewrite = array((int)Configuration::get('PS_LANG_DEFAULT') => $this->sanitizeCategories(($newCatFormatter)));
                 $newCategory->position = (int) Category::getLastPosition((int) Configuration::get('PS_HOME_CATEGORY'), 1);
                 // $newCategory->add();
     
@@ -216,6 +225,27 @@ class Csvimporter extends Module
         }
 
         return $productCategories;
+    }
+
+    public function sanitizeCategories($name)
+    {
+        $cat = $name;
+
+        $cat = str_replace(
+            array('á', 'é', 'í', 'ó', 'ú', 'ñ', 'Á', 'É', 'Í', 'Ó', 'Ú', 'Ñ'),
+            array('a', 'e', 'i', 'o', 'u', 'n', 'A', 'E', 'I', 'O', 'U', 'N'),
+            $cat
+        );
+
+        $cat = preg_replace('/[^a-zA-Z0-9\s]/', '', $cat);
+
+        $cat = preg_replace('/\s+/', ' ', $cat);
+
+        // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
+        //     var_dump($cat);
+        // echo '</pre></div>';
+    
+        return $cat;
     }
 
     /**

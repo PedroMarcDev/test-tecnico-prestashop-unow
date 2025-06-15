@@ -133,7 +133,7 @@ class Weatherinfo extends Module
         if($user_ip) {
             $localization = $this->getUserLocalization($user_ip);
 
-            // $weatherData = $this->getUserWeather($localization);
+            $weatherData = $this->getUserWeather($localization);
 
             // $city = $weatherData['name'];
             // $country_code = $weatherData['sys']['country'];
@@ -145,8 +145,6 @@ class Weatherinfo extends Module
 
             // $this->context->smarty->assign(['city' => $city, 'country' => $country_code, 'weather' => $weather, 'temp' => $temp, 'humidity' => $humidity, 'feels_like' => $feels_like, 'weather_icon' => $weather_icon]);
         }
-
-        //die(var_dump($localization));
         
         return $this->display(__FILE__, '/views/templates/hook/displayNavFullWidth.tpl');
     }
@@ -171,8 +169,6 @@ class Weatherinfo extends Module
 
         $data = json_decode($response, true);
 
-        // die(var_dump($formattedData));
-
         if ($data) {
             return [
                 'country_code' => $data['country_code2'],
@@ -182,5 +178,34 @@ class Weatherinfo extends Module
         }
         
         return [];
+    }
+
+    public function getUserWeather($local) {
+
+        //$cacheUserWeather = 'user_weather_' . md5($local);
+
+        $weatherApiKey = Configuration::get('apikey');
+
+        $weatherEndpoint = 'https://api.openweathermap.org/data/2.5/weather?';
+
+        $query = 'q='.$local['city'].','.$local['country_code'];
+
+        $shop_lang = Context::getContext()->language->iso_code;
+
+        $url = $weatherEndpoint.$query.'&APPID='.$weatherApiKey.'&units=metric&lang='.$shop_lang;
+
+        $curl = curl_init();
+
+        curl_setopt($curl, CURLOPT_URL, $url);
+
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $data = json_decode($response, true);
+
+        return $data;
     }
 }

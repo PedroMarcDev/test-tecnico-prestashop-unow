@@ -141,9 +141,44 @@ class Csvimporter extends Module
 
             $categories = $this->handleCategories($product['Categorias']);
 
+            $productSql = "SELECT id_product FROM "._DB_PREFIX_."product WHERE reference = ".$product['Referencia']."";
+            $checkProductExists = Db::getInstance()->executeS($productSql);
+
             // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
-            //     var_dump($manufacturer);
+            //     var_dump($checkProductExists);
             // echo '</pre></div>';
+
+            if(!$checkProductExists) {
+                $newProduct = new Product();
+                $newProduct->name = array((int)Configuration::get('PS_LANG_DEFAULT') => $product['Nombre']);
+                $newProduct->reference = $product['Referencia'];
+                $newProduct->ean13 = $product['EAN13'];
+                $newProduct->wholesale_price = (float)$product['Precio de coste'];
+                $newProduct->price = (float)$product['Precio de venta'];
+                $newProduct->id_tax_rules_group = (int)$iva[0]['id_tax'];
+                $newProduct->id_manufacturer = (int)$manufacturer;
+                $newProduct->id_category_default = $categories[0];
+                $newProduct->add();
+                StockAvailable::setQuantity($newProduct->id, 0, (int)$product['Cantidad']);
+                $newProduct->addToCategories($categories); 
+
+                // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
+                //     var_dump($newProduct);
+                // echo '</pre></div>';
+            }
+            else {              
+                $productUpdate = new Product((int)$checkProductExists[0]['id_product']);
+                $productUpdate->reference = $product['Referencia'];
+                $productUpdate->ean13 = $product['EAN13'];
+                $productUpdate->wholesale_price = (float)$product['Precio de coste'];
+                $productUpdate->price = (float)$product['Precio de venta'];
+                $productUpdate->id_tax_rules_group = (int)$iva[0]['id_tax'];
+                $productUpdate->id_manufacturer = (int)$manufacturer;
+                $productUpdate->id_category_default = $categories[0];
+                $productUpdate->update();
+                StockAvailable::updateQuantity($productUpdate->id, 0, $product['Cantidad'], null, true);
+
+            }
         }
 
         $this->context->controller->confirmations[] = $this->l('Importación completada con éxito');
@@ -166,7 +201,7 @@ class Csvimporter extends Module
             $newManufacturer = new Manufacturer();
             $newManufacturer->name = $brand;
             $newManufacturer->active = 1;
-            // $newManufacturer->add();
+            $newManufacturer->add();
             
             // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
             //     var_dump($newManufacturer);
@@ -215,7 +250,7 @@ class Csvimporter extends Module
                 $newCategory->id_parent = Configuration::get('PS_HOME_CATEGORY');
                 $newCategory->link_rewrite = array((int)Configuration::get('PS_LANG_DEFAULT') => $this->sanitizeCategories(($newCatFormatter)));
                 $newCategory->position = (int) Category::getLastPosition((int) Configuration::get('PS_HOME_CATEGORY'), 1);
-                // $newCategory->add();
+                $newCategory->add();
     
                 $productCategories[$key] = (int)$newCategory->id;
     

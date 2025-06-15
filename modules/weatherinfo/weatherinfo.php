@@ -135,15 +135,15 @@ class Weatherinfo extends Module
 
             $weatherData = $this->getUserWeather($localization);
 
-            // $city = $weatherData['name'];
-            // $country_code = $weatherData['sys']['country'];
-            // $weather = $weatherData['weather'][0]['description'];
-            // $weather_icon = $weatherData['weather'][0]['icon'];
-            // $temp = $weatherData['main']['temp'];
-            // $feels_like = $weatherData['main']['feels_like'];
-            // $humidity = $weatherData['main']['humidity'];
+            $city = $weatherData['name'];
+            $country_code = $weatherData['sys']['country'];
+            $weather = $weatherData['weather'][0]['description'];
+            $weather_icon = $weatherData['weather'][0]['icon'];
+            $temp = $weatherData['main']['temp'];
+            $feels_like = $weatherData['main']['feels_like'];
+            $humidity = $weatherData['main']['humidity'];
 
-            // $this->context->smarty->assign(['city' => $city, 'country' => $country_code, 'weather' => $weather, 'temp' => $temp, 'humidity' => $humidity, 'feels_like' => $feels_like, 'weather_icon' => $weather_icon]);
+            $this->context->smarty->assign(['city' => $city, 'country' => $country_code, 'weather' => $weather, 'temp' => $temp, 'humidity' => $humidity, 'feels_like' => $feels_like, 'weather_icon' => $weather_icon]);
         }
         
         return $this->display(__FILE__, '/views/templates/hook/displayNavFullWidth.tpl');

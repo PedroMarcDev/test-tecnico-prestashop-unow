@@ -137,13 +137,44 @@ class Csvimporter extends Module
             $ivaSql = "SELECT id_tax FROM "._DB_PREFIX_."tax WHERE rate = ".$product['IVA']."";
             $iva = Db::getInstance()->executeS($ivaSql);
 
+            $manufacturer = $this->handleManufacturer($product['Marca']);
+
             echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
-                var_dump($product);
+                var_dump($manufacturer);
             echo '</pre></div>';
         }
 
         $this->context->controller->confirmations[] = $this->l('Importación completada con éxito');
 
+    }
+
+    public function handleManufacturer($brand) 
+    {
+        //die(var_dump($brand));
+
+        $brandSql = "SELECT id_manufacturer FROM "._DB_PREFIX_."manufacturer WHERE name = '".$brand."'";
+
+        $checkBrandExists = Db::getInstance()->executeS($brandSql);
+
+        // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
+        //     var_dump($checkBrandExists);
+        // echo '</pre></div>';
+
+        if (!$checkBrandExists) {
+            $newManufacturer = new Manufacturer();
+            $newManufacturer->name = $brand;
+            $newManufacturer->active = 1;
+            // $newManufacturer->add();
+            
+            // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
+            //     var_dump($newManufacturer);
+            // echo '</pre></div>';
+
+            return $newManufacturer->id;
+
+        }else{
+            return $checkBrandExists[0]['id_manufacturer'];
+        }
     }
 
     /**

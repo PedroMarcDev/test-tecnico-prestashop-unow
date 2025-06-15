@@ -25,3 +25,10 @@
 * Don't forget to prefix your containers with your own identifier
 * to avoid any conflicts with others containers.
 */
+
+.weather-container {
+    text-align: center;
+    font-size: 15px;
+    background: skyblue;
+    color: #f5f5f5;
+}

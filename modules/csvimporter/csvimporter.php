@@ -139,6 +139,8 @@ class Csvimporter extends Module
 
             $manufacturer = $this->handleManufacturer($product['Marca']);
 
+            $categories = $this->handleCategories($product['Categorias']);
+
             echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
                 var_dump($manufacturer);
             echo '</pre></div>';
@@ -175,6 +177,45 @@ class Csvimporter extends Module
         }else{
             return $checkBrandExists[0]['id_manufacturer'];
         }
+    }
+
+    public function handleCategories($cat) 
+    {
+        // die(var_dump($cat));
+        $categories = explode(';', $cat);
+
+        // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
+        //     var_dump($categories);
+        // echo '</pre></div>';
+
+        // die(var_dump($categories));
+
+        $productCategories[] = array();
+
+        foreach($categories as $key => $category) {
+
+            $catSql = "SELECT id_category FROM "._DB_PREFIX_."category_lang WHERE name = '".$category."'";
+
+            $checkCategoryExists = Db::getInstance()->executeS($catSql);
+
+            if (!$checkCategoryExists) {
+                $formattedCat = strtr($category, " ", "-");
+                $newCatFormatter = str_replace(",", "", $formattedCat);
+                $newCategory = new Category();
+                $newCategory->name = array((int)Configuration::get('PS_LANG_DEFAULT') => $category);
+                $newCategory->id_shop_default = 1;
+                $newCategory->id_parent = Configuration::get('PS_HOME_CATEGORY');
+                $newCategory->position = (int) Category::getLastPosition((int) Configuration::get('PS_HOME_CATEGORY'), 1);
+                // $newCategory->add();
+    
+                $productCategories[$key] = (int)$newCategory->id;
+    
+            }else{
+                $productCategories[$key] = (int)$checkCategoryExists[0]['id_category'];
+            }
+        }
+
+        return $productCategories;
     }
 
     /**

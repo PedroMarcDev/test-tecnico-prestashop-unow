@@ -144,10 +144,6 @@ class Csvimporter extends Module
             $productSql = "SELECT id_product FROM "._DB_PREFIX_."product WHERE reference = ".$product['Referencia']."";
             $checkProductExists = Db::getInstance()->executeS($productSql);
 
-            // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
-            //     var_dump($checkProductExists);
-            // echo '</pre></div>';
-
             if(!$checkProductExists) {
                 $newProduct = new Product();
                 $newProduct->name = array((int)Configuration::get('PS_LANG_DEFAULT') => $product['Nombre']);
@@ -161,10 +157,6 @@ class Csvimporter extends Module
                 $newProduct->add();
                 StockAvailable::setQuantity($newProduct->id, 0, (int)$product['Cantidad']);
                 $newProduct->addToCategories($categories); 
-
-                // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
-                //     var_dump($newProduct);
-                // echo '</pre></div>';
             }
             else {              
                 $productUpdate = new Product((int)$checkProductExists[0]['id_product']);
@@ -187,25 +179,16 @@ class Csvimporter extends Module
 
     public function handleManufacturer($brand) 
     {
-        //die(var_dump($brand));
 
         $brandSql = "SELECT id_manufacturer FROM "._DB_PREFIX_."manufacturer WHERE name = '".$brand."'";
 
         $checkBrandExists = Db::getInstance()->executeS($brandSql);
-
-        // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
-        //     var_dump($checkBrandExists);
-        // echo '</pre></div>';
 
         if (!$checkBrandExists) {
             $newManufacturer = new Manufacturer();
             $newManufacturer->name = $brand;
             $newManufacturer->active = 1;
             $newManufacturer->add();
-            
-            // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
-            //     var_dump($newManufacturer);
-            // echo '</pre></div>';
 
             return $newManufacturer->id;
 
@@ -216,14 +199,7 @@ class Csvimporter extends Module
 
     public function handleCategories($cat) 
     {
-        // die(var_dump($cat));
         $categories = explode(';', $cat);
-
-        // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
-        //     var_dump($categories);
-        // echo '</pre></div>';
-
-        // die(var_dump($categories));
 
         $productCategories[] = array();
 
@@ -232,14 +208,6 @@ class Csvimporter extends Module
             $catSql = "SELECT id_category FROM "._DB_PREFIX_."category_lang WHERE name = '".$category."'";
 
             $checkCategoryExists = Db::getInstance()->executeS($catSql);
-
-            // $formattedCat = strtr($category, " ", "-");
-
-            // $newCatFormatter = str_replace(",", "", $formattedCat);
-
-            // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
-            //     var_dump($newCatFormatter);
-            // echo '</pre></div>';
 
             if (!$checkCategoryExists) {
                 $formattedCat = strtr($category, " ", "-");
@@ -275,10 +243,6 @@ class Csvimporter extends Module
         $cat = preg_replace('/[^a-zA-Z0-9\s]/', '', $cat);
 
         $cat = preg_replace('/\s+/', ' ', $cat);
-
-        // echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
-        //     var_dump($cat);
-        // echo '</pre></div>';
     
         return $cat;
     }

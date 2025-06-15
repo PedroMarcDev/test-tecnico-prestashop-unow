@@ -96,6 +96,51 @@ class Csvimporter extends Module
      */
     protected function postProcess()
     {
+        if (((bool)Tools::isSubmit('submit_csv')) == true) {
+
+            $csv = array();
+            $csv['name'] = $_FILES['csv_product']['name'];
+            $csv['type'] = $_FILES['csv_product']['type'];
+            $csv['tmp_name'] = $_FILES['csv_product']['tmp_name'];
+            $csv['error'] = $_FILES['csv_product']['error'];
+            $csv['size'] = $_FILES['csv_product']['size'];
+
+            $extension = pathinfo($csv['name'], PATHINFO_EXTENSION);
+
+            if(empty($csv["tmp_name"])) {
+                $this->context->controller->errors[] = $this->l('Por favor, selecciona un archivo CSV para poder continuar');
+            }
+
+            if(strtolower($extension) != 'csv') {
+                $this->context->controller->errors[] = $this->l('El archivo debe ser en formato CSV (.csv)');
+            }
+
+            $this->processCSV($csv);
+
+        }
+    }
+
+    public function processCSV($csv) 
+    {
+        $handle = fopen($csv['tmp_name'], "r");
+
+        $csvHeaders = fgetcsv($handle, 0, ",");
+
+        $contentCsv = [];
+
+        while ($row = fgetcsv($handle)) {
+            $head = array_combine($csvHeaders, $row);
+            $contentCsv[] = $head;
+        }
+
+        foreach($contentCsv as $product) {
+            echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
+                var_dump($product);
+            echo '</pre></div>';
+        }
+
+        $this->context->controller->confirmations[] = $this->l('Importación completada con éxito');
+
     }
 
     /**

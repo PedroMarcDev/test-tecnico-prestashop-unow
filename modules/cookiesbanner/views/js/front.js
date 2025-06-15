@@ -32,6 +32,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const rejectCookies = document.querySelector('#cookiesRejected');
     const popupOverlay = document.querySelector('.cookies-overlay');
 
+    if (getCookie('consent_cookies') !== '') {
+        cookiesBanner.style.display = 'none';
+        if (popupOverlay) popupOverlay.style.display = 'none';
+        return;
+    }
+
     if (acceptCookies) {
         acceptCookies.addEventListener('click', (e) => {
             e.preventDefault();
@@ -50,12 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
             cookiesBanner.style.display = 'none';
             if (popupOverlay) popupOverlay.style.display = 'none';
         })
-    }
-
-    if (getCookie('consent_cookies') !== '') {
-        cookiesBanner.style.display = 'none';
-        if (popupOverlay) popupOverlay.style.display = 'none';
-        return;
     }
 
     function setCookie(name, value, days) {

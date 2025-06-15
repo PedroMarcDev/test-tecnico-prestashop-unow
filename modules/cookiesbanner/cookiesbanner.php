@@ -1,28 +1,29 @@
 <?php
+
 /**
-* 2007-2025 PrestaShop
-*
-* NOTICE OF LICENSE
-*
-* This source file is subject to the Academic Free License (AFL 3.0)
-* that is bundled with this package in the file LICENSE.txt.
-* It is also available through the world-wide-web at this URL:
-* http://opensource.org/licenses/afl-3.0.php
-* If you did not receive a copy of the license and are unable to
-* obtain it through the world-wide-web, please send an email
-* to license@prestashop.com so we can send you a copy immediately.
-*
-* DISCLAIMER
-*
-* Do not edit or add to this file if you wish to upgrade PrestaShop to newer
-* versions in the future. If you wish to customize PrestaShop for your
-* needs please refer to http://www.prestashop.com for more information.
-*
-*  @author    PrestaShop SA <contact@prestashop.com>
-*  @copyright 2007-2025 PrestaShop SA
-*  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
-*  International Registered Trademark & Property of PrestaShop SA
-*/
+ * 2007-2025 PrestaShop
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+ * versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ *  @author    PrestaShop SA <contact@prestashop.com>
+ *  @copyright 2007-2025 PrestaShop SA
+ *  @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ *  International Registered Trademark & Property of PrestaShop SA
+ */
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -79,16 +80,25 @@ class Cookiesbanner extends Module
      */
     public function getContent()
     {
-        /**
-         * If values have been submitted in the form, process.
-         */
         if (((bool)Tools::isSubmit('submitBannerConfig')) == true) {
             $this->postProcess();
         }
 
-        $this->context->smarty->assign(['test' => Configuration::get('test')]);
+        $this->context->smarty->assign([
+            'title' => Configuration::get('banner_title'),
+            'content' => Configuration::get('banner_content'),
+            'txt_color' => Configuration::get('banner_text_color'),
+            'bg_color' => Configuration::get('banner_background_color'),
+            'txt_btn_accept' => Configuration::get('accept_btn_txt'),
+            'txt_btn_refuse' => Configuration::get('refuse_btn_txt'),
+            'accept_txt_color' => Configuration::get('accept_text_color'),
+            'refuse_txt_color' => Configuration::get('refuse_text_color'),
+            'accept_bg_color' => Configuration::get('accept_bg_color'),
+            'refuse_bg_color' => Configuration::get('refuse_bg_color'),
+            'banner_position' => Configuration::get('banner_position'),
+        ]);
 
-        $output = $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
+        $output = $this->context->smarty->fetch($this->local_path . 'views/templates/admin/configure.tpl');
 
         return $output;
     }
@@ -98,21 +108,45 @@ class Cookiesbanner extends Module
      */
     protected function postProcess()
     {
-        $form_values = $this->getConfigFormValues();
+        if (((bool)Tools::isSubmit('submitBannerConfig')) == true) {
+            $defaults = [
+                'banner_title' => $this->l('Bienvenido al Módulo de Banner de Cookies'),
+                'banner_content' => $this->l('Utilizamos cookies para mejorar su experiencia en nuestro sitio web.'),
+                'banner_text_color' => '#ffffff',
+                'banner_background_color' => '#000000',
+                'accept_btn_txt' => $this->l('Aceptar'),
+                'refuse_btn_txt' => $this->l('Rechazar'),
+                'accept_text_color' => '#ffffff',
+                'refuse_text_color' => '#ffffff',
+                'accept_bg_color' => '#28a745',
+                'refuse_bg_color' => '#dc3545',
+                'banner_position' => 'bottom'
+            ];
 
-        foreach (array_keys($form_values) as $key) {
-            Configuration::updateValue($key, Tools::getValue($key));
+            $configValues = [];
+            foreach ($defaults as $key => $defaultValue) {
+                $submittedValue = Tools::getValue($key);
+                $configValues[$key] = empty($submittedValue) ? $defaultValue : $submittedValue;
+            }
+
+            foreach ($configValues as $key => $value) {
+                Configuration::updateValue($key, $value);
+            }
+
+            $this->context->controller->confirmations[] = $this->l('Banner configurado correctamente');
         }
     }
 
     /**
-    * Add the CSS & JavaScript files you want to be loaded in the BO.
-    */
+     * Add the CSS & JavaScript files you want to be loaded in the BO.
+     */
     public function hookDisplayBackOfficeHeader()
     {
         if (Tools::getValue('configure') == $this->name) {
-            $this->context->controller->addJS($this->_path.'views/js/back.js');
-            $this->context->controller->addCSS($this->_path.'views/css/back.css');
+            $this->context->controller->addJS($this->_path . 'views/js/back.js');
+            $this->context->controller->addCSS($this->_path . 'views/css/back.css');
+            $this->context->controller->addJS(_PS_JS_DIR_ . 'tiny_mce/tiny_mce.js');
+            $this->context->controller->addJS(_PS_JS_DIR_ . 'admin/tinymce.inc.js');
         }
     }
 
@@ -121,12 +155,26 @@ class Cookiesbanner extends Module
      */
     public function hookHeader()
     {
-        $this->context->controller->addJS($this->_path.'/views/js/front.js');
-        $this->context->controller->addCSS($this->_path.'/views/css/front.css');
+        $this->context->controller->addJS($this->_path . '/views/js/front.js');
+        $this->context->controller->addCSS($this->_path . '/views/css/front.css');
     }
 
     public function hookDisplayFooterAfter()
     {
+        $this->context->smarty->assign([
+            'title' => Configuration::get('banner_title'),
+            'content' => Configuration::get('banner_content'),
+            'txt_color' => Configuration::get('banner_text_color'),
+            'bg_color' => Configuration::get('banner_background_color'),
+            'txt_btn_accept' => Configuration::get('accept_btn_txt'),
+            'txt_btn_refuse' => Configuration::get('refuse_btn_txt'),
+            'accept_txt_color' => Configuration::get('accept_text_color'),
+            'refuse_txt_color' => Configuration::get('refuse_text_color'),
+            'accept_bg_color' => Configuration::get('accept_bg_color'),
+            'refuse_bg_color' => Configuration::get('refuse_bg_color'),
+            'banner_position' => Configuration::get('banner_position'),
+        ]);
+
         return $this->display(__FILE__, '/views/templates/hook/displayFooterAfter.tpl');
     }
 }

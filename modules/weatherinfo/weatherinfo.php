@@ -100,10 +100,17 @@ class Weatherinfo extends Module
      */
     protected function postProcess()
     {
-        Configuration::updateValue('apikey', Tools::getValue('apikey'));
-        Configuration::updateValue('geokey', Tools::getValue('geokey'));
-
-        $this->context->controller->confirmations[] = $this->l('APIs Keys guardadas correctamente');
+        if (((bool)Tools::isSubmit('submitApisKey')) == true) {
+            
+            if(empty(Tools::getValue('apikey')) || empty(Tools::getValue('geokey'))) {
+                $this->context->controller->errors[] = $this->l('Por favor ingresa las API keys solicitadas para continuar');
+            }
+            else {
+                Configuration::updateValue('apikey', Tools::getValue('apikey'));
+                Configuration::updateValue('geokey', Tools::getValue('geokey'));
+                $this->context->controller->confirmations[] = $this->l('APIs Keys guardadas correctamente');
+            }
+        }
     }
 
     /**

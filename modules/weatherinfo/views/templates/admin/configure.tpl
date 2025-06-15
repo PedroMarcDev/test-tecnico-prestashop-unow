@@ -29,7 +29,7 @@
 
 			<label class="control-label col-lg-3 required">
 
-				{l s='Añadir APIKey de OpenWeatherMap' mod='weatherbyuserip'}
+				{l s='Añadir APIKey de OpenWeatherMap' mod='weatherinfo'}
 
 			</label>
 
@@ -39,7 +39,7 @@
 
 				<p class="help-block">
 
-					{l s='APIKey de OpenWeatherMap' mod='weatherbyuserip'}
+					{l s='APIKey de OpenWeatherMap' mod='weatherinfo'}
 
 				</p>
 
@@ -47,7 +47,7 @@
 
 			<label class="control-label col-lg-3 required">
 
-				{l s='Añadir APIKey de IPGeolocation' mod='weatherbyuserip'}
+				{l s='Añadir APIKey de IPGeolocation' mod='weatherinfo'}
 
 			</label>
 
@@ -57,7 +57,7 @@
 
 				<p class="help-block">
 
-					{l s='APIKey de IPGeolocation' mod='weatherbyuserip'}
+					{l s='APIKey de IPGeolocation' mod='weatherinfo'}
 
 				</p>
 
@@ -68,7 +68,7 @@
 				<button type="submit" value="1" id="submitApisKey" name="submitApisKey"
 					class="btn btn-default pull-right">
 
-					<i class="process-icon-save"></i> {l s='Guardar' mod='weatherbyuserip'}
+					<i class="process-icon-save"></i> {l s='Guardar' mod='weatherinfo'}
 
 				</button>
 

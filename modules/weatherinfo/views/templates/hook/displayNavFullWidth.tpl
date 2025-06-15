@@ -1,13 +1,15 @@
-<div class="w-100">
-    <div class="weather-block">
-        <div class="weather-container">
-            <img src="https://openweathermap.org/img/wn/{$weather_icon}@2x.png" alt="weather_icon" width="55">
-            <span><strong>{l s='Ubicacion: ' mod='weatherbyuserip'}</strong>{$city}, {$country}. </span>
-            <span><strong>{l s='Tiempo actual: ' mod='weatherbyuserip'}</strong>{$weather}</span>
-            <span><strong>{l s='Temperatura: ' mod='weatherbyuserip'}</strong>{$temp}°C</span>
-            <span><strong>{l s='Sensacion Termica: ' mod='weatherbyuserip'}</strong>{$feels_like}°C</span>
-            <span><strong>{l s='Humedad: ' mod='weatherbyuserip'}</strong>{$humidity}%</span>
-        </div>
+{if $data_weather == '404'}
+    <div class="w-100">
+        <div class="weather-block">
+            <div class="weather-container">
+                <img src="https://openweathermap.org/img/wn/{$weather_icon}@2x.png" alt="weather_icon" width="55">
+                <span><strong>{l s='Ubicacion: ' mod='weatherbyuserip'}</strong>{$city}, {$country}. </span>
+                <span><strong>{l s='Tiempo actual: ' mod='weatherbyuserip'}</strong>{$weather}</span>
+                <span><strong>{l s='Temperatura: ' mod='weatherbyuserip'}</strong>{$temp}°C</span>
+                <span><strong>{l s='Sensacion Termica: ' mod='weatherbyuserip'}</strong>{$feels_like}°C</span>
+                <span><strong>{l s='Humedad: ' mod='weatherbyuserip'}</strong>{$humidity}%</span>
+            </div>
 
+        </div>
     </div>
-</div>
+{/if}

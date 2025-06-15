@@ -143,7 +143,9 @@ class Weatherinfo extends Module
             $feels_like = $weatherData['main']['feels_like'];
             $humidity = $weatherData['main']['humidity'];
 
-            $this->context->smarty->assign(['city' => $city, 'country' => $country_code, 'weather' => $weather, 'temp' => $temp, 'humidity' => $humidity, 'feels_like' => $feels_like, 'weather_icon' => $weather_icon]);
+            // die(var_dump($weatherData));
+
+            $this->context->smarty->assign(['city' => $city, 'country' => $country_code, 'weather' => $weather, 'temp' => $temp, 'humidity' => $humidity, 'feels_like' => $feels_like, 'weather_icon' => $weather_icon, 'data_weather' => $weatherData]);
         }
         
         return $this->display(__FILE__, '/views/templates/hook/displayNavFullWidth.tpl');

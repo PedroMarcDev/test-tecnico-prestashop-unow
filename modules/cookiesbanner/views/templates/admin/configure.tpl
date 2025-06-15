@@ -40,6 +40,15 @@
 
 		<div class="form-group">
 			<label class="control-label col-lg-3">
+				{l s='Color del título' mod='cookiesbanner'}
+			</label>
+			<div class="col-lg-9">
+				<input type="color" name="banner_title_color" id="banner_title_color" value="{$title_color}" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-lg-3">
 				{l s='Contenido del banner' mod='cookiesbanner'}
 			</label>
 			<div class="col-lg-9">
@@ -61,8 +70,7 @@
 				{l s='Fondo del banner' mod='cookiesbanner'}
 			</label>
 			<div class="col-lg-9">
-				<input type="color" name="banner_background_color" id="banner_background_color"
-					value="{$bg_color}" />
+				<input type="color" name="banner_background_color" id="banner_background_color" value="{$bg_color}" />
 			</div>
 		</div>
 

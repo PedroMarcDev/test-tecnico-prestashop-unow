@@ -86,6 +86,7 @@ class Cookiesbanner extends Module
 
         $this->context->smarty->assign([
             'title' => Configuration::get('banner_title'),
+            'title_color' => Configuration::get('banner_title_color'),
             'content' => Configuration::get('banner_content'),
             'txt_color' => Configuration::get('banner_text_color'),
             'bg_color' => Configuration::get('banner_background_color'),
@@ -111,6 +112,7 @@ class Cookiesbanner extends Module
         if (((bool)Tools::isSubmit('submitBannerConfig')) == true) {
             $defaults = [
                 'banner_title' => $this->l('Bienvenido al Módulo de Banner de Cookies'),
+                'banner_title_color' => '#ffffff',
                 'banner_content' => $this->l('Utilizamos cookies para mejorar su experiencia en nuestro sitio web.'),
                 'banner_text_color' => '#ffffff',
                 'banner_background_color' => '#000000',
@@ -163,6 +165,7 @@ class Cookiesbanner extends Module
     {
         $this->context->smarty->assign([
             'title' => Configuration::get('banner_title'),
+            'title_color' => Configuration::get('banner_title_color'),
             'content' => Configuration::get('banner_content'),
             'txt_color' => Configuration::get('banner_text_color'),
             'bg_color' => Configuration::get('banner_background_color'),

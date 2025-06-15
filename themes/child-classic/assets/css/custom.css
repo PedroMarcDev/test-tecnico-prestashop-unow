@@ -355,6 +355,17 @@ body {
     padding-bottom: 16px;
 }
 
+#product .tabs .tab-content .tab-pane .product-description,
+#product .tabs .tab-content .tab-pane .product-description p {
+    color: #000000;
+}
+
+#product .tabs .tab-content .tab-pane .product-description p,
+#product .tabs .tab-content .tab-pane .product-description li,
+#product .tabs .tab-content .tab-pane .product-description a {
+    font-family: 'Roboto';
+}
+
 .tab-separator {
     color: #232323;
     text-align: right;

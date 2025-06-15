@@ -127,7 +127,60 @@ class Weatherinfo extends Module
     }
 
     public function hookDisplayNavFullWidth() {
+
+        $user_ip = file_get_contents('https://api.ipify.org');
+
+        if($user_ip) {
+            $localization = $this->getUserLocalization($user_ip);
+
+            // $weatherData = $this->getUserWeather($localization);
+
+            // $city = $weatherData['name'];
+            // $country_code = $weatherData['sys']['country'];
+            // $weather = $weatherData['weather'][0]['description'];
+            // $weather_icon = $weatherData['weather'][0]['icon'];
+            // $temp = $weatherData['main']['temp'];
+            // $feels_like = $weatherData['main']['feels_like'];
+            // $humidity = $weatherData['main']['humidity'];
+
+            // $this->context->smarty->assign(['city' => $city, 'country' => $country_code, 'weather' => $weather, 'temp' => $temp, 'humidity' => $humidity, 'feels_like' => $feels_like, 'weather_icon' => $weather_icon]);
+        }
+
+        //die(var_dump($localization));
         
         return $this->display(__FILE__, '/views/templates/hook/displayNavFullWidth.tpl');
+    }
+
+    public function getUserLocalization($ip) {
+
+        //$cacheIp = 'user_ip_' . md5($ip);
+
+        $geoApiKey = Configuration::get('geokey');
+
+        $url = 'https://api.ipgeolocation.io/ipgeo?apiKey='.$geoApiKey.'&ip='.$ip;
+
+        $curl = curl_init();
+
+        curl_setopt($curl, CURLOPT_URL, $url);
+
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $data = json_decode($response, true);
+
+        // die(var_dump($formattedData));
+
+        if ($data) {
+            return [
+                'country_code' => $data['country_code2'],
+                'city' => rawurlencode($data['city']),
+                'region' => rawurlencode($data['state_prov'])
+            ];
+        }
+        
+        return [];
     }
 }

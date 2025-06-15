@@ -134,6 +134,9 @@ class Csvimporter extends Module
         }
 
         foreach($contentCsv as $product) {
+            $ivaSql = "SELECT id_tax FROM "._DB_PREFIX_."tax WHERE rate = ".$product['IVA']."";
+            $iva = Db::getInstance()->executeS($ivaSql);
+
             echo '<div style="background: white; position: relative; z-index: 2000;"><pre>';
                 var_dump($product);
             echo '</pre></div>';

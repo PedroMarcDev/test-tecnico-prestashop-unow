@@ -471,6 +471,61 @@ body {
     background: #ef8ed0;
 }
 
+#product .customers-comments-list {
+    display: inline-block;
+    width: 100%;
+    margin-top: 3rem;
+    padding: 20px 30px;
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, .2);
+    background: #fff;
+}
+
+#product .customers-comments-list #product-comments-list-header {
+    padding: .5em 1em;
+    border: none;
+    border-bottom: 3px solid #2fb5d2;
+    color: #2fb5d2;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+#product .customers-comments-list .product-comment-list-item {
+    display: flex;
+    align-items: center;
+    margin: 0 0 25px;
+    padding: 5px 0 0;
+    background-color: transparent;
+}
+
+#product .customers-comments-list .product-comment-list-item .comment-infos {
+    border-right: 1px solid #2fb5d2;
+}
+
+#product .customers-comments-list .product-comment-list-item .comment-infos .grade-stars {
+    margin-bottom: 5px;
+}
+
+#product .customers-comments-list .product-comment-list-item .comment-infos .comment-author {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #222;
+}
+
+#product .customers-comments-list .product-comment-list-item .comment-infos .comment-date {
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #7a7a7a;
+}
+
+#product .customers-comments-list .product-comment-list-item .comment-content p {
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #555;
+}
+
 @media (max-width: 358px) {
     #product .product-container .product-information .product-actions .product-add-to-cart .product-quantity {
         flex-direction: column;

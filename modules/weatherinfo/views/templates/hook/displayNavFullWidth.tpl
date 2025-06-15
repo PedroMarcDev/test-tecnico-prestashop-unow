@@ -1,4 +1,4 @@
-{if $data_weather == '404'}
+{if $data_weather.cod != 404}
     <div class="w-100">
         <div class="weather-block">
             <div class="weather-container">

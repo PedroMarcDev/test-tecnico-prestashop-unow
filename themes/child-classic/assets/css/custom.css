@@ -174,6 +174,10 @@ body {
     font-weight: 300;
 }
 
+#product .product-container .product-information .product-actions .product-add-to-cart #product-availability .product-unavailable {
+    color: red;
+}
+
 #product .product-container .product-information .product-actions .social-sharing li {
     background-color: #a9a9a9;
 }
@@ -198,6 +202,41 @@ body {
 .pinterest.icon-gray, 
 .pinterest.icon-gray:hover {
     background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkNhcGFfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSI0NXB4IiBoZWlnaHQ9IjQ1cHgiIHZpZXdCb3g9IjAgMCA0NSA0NSIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNDUgNDUiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHRpdGxlPkFydGJvYXJkIDMgQ29weSAyPC90aXRsZT4NCjxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPg0KPGcgaWQ9IlBhZ2UtMSI+DQoJPGcgaWQ9IkFydGJvYXJkLTMtQ29weS0yIj4NCgkJPGcgaWQ9InN2Z194MkJfeG1sIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMC4wMDAwMDAsIDYuMDAwMDAwKSI+DQoJCQk8ZyBpZD0iQ2FscXVlXzEiPg0KCQkJCTxnIGlkPSJHcm91cCI+DQoJCQkJCTxwYXRoIGlkPSJTaGFwZSIgZmlsbD0iI0ZGRkZGRiIgZD0iTTExLjcsMS4xQzYuNCwxLjYsMS4xLDYsMC44LDEyLjFjLTAuMSwzLjgsMC45LDYuNiw0LjUsNy40YzEuNi0yLjctMC41LTMuMy0wLjgtNS4zDQoJCQkJCQljLTEuMy04LjEsOS40LTEzLjcsMTUtOGMzLjksMy45LDEuMywxNi00LjksMTQuOGMtNi0xLjIsMi45LTEwLjgtMS44LTEyLjdDOC45LDYuOCw2LjksMTMsOC43LDE2LjFjLTEuMSw1LjMtMy40LDEwLjMtMi41LDE3DQoJCQkJCQljMy4xLTIuMTk5LDQuMS02LjUsNC45LTEwLjg5OWMxLjUsMC44OTksMi40LDEuODk5LDQuMywyLjFDMjIuNiwyNC45LDI2LjYsMTcuMSwyNS43LDkuOUMyNC44LDMuNSwxOC41LDAuMywxMS43LDEuMXoiLz4NCgkJCQk8L2c+DQoJCQk8L2c+DQoJCTwvZz4NCgk8L2c+DQo8L2c+DQo8L3N2Zz4NCg==) !important;
+}
+
+#product .product-container .product-information .product-actions .wishlist-button-add {
+    width: auto;
+    height: auto;
+    margin-top: 25px;
+    margin-left: 0;
+    padding: 10.5px 40.5px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    border-radius: 7px;
+    background: #f49dd8;
+    box-shadow: none;
+    transform: scale(1);
+}
+
+#product .product-container .product-information .product-actions .wishlist-button-add::before {
+    content: "Añadir a la lista de deseos";
+    margin-right: 2.5px;
+}
+
+#product .product-container .product-information .product-actions .wishlist-button-add i {
+    color: #ffffff;
+}
+
+#product .product-container .product-information .product-actions .wishlist-button-add:hover {
+    color: #232323;
+    background-color: #ddd;
+}
+
+#product .product-container .product-information .product-actions .wishlist-button-add:hover i {
+    color: #232323;
 }
 
 .star-content div.star,

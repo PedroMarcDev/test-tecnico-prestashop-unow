@@ -150,8 +150,6 @@ class Weatherinfo extends Module
             $feels_like = $weatherData['main']['feels_like'];
             $humidity = $weatherData['main']['humidity'];
 
-            // die(var_dump($weatherData));
-
             $this->context->smarty->assign(['city' => $city, 'country' => $country_code, 'weather' => $weather, 'temp' => $temp, 'humidity' => $humidity, 'feels_like' => $feels_like, 'weather_icon' => $weather_icon, 'data_weather' => $weatherData]);
         }
         
@@ -160,60 +158,73 @@ class Weatherinfo extends Module
 
     public function getUserLocalization($ip) {
 
-        //$cacheIp = 'user_ip_' . md5($ip);
+        $cache_dir = dirname(__FILE__) . '/cache/';
+        if (!is_dir($cache_dir)) {
+            mkdir($cache_dir, 0755, true);
+        }
+        $cache_file = $cache_dir . 'weather_localization_' . md5($ip) . '.json';
+        $cache_time = 600; // 10 minutos
+
+        if (file_exists($cache_file) && (time() - filemtime($cache_file) < $cache_time)) {
+            $data = file_get_contents($cache_file);
+            return json_decode($data, true);
+        }
 
         $geoApiKey = Configuration::get('geokey');
-
-        $url = 'https://api.ipgeolocation.io/ipgeo?apiKey='.$geoApiKey.'&ip='.$ip;
+        $url = 'https://api.ipgeolocation.io/ipgeo?apiKey=' . $geoApiKey . '&ip=' . $ip;
 
         $curl = curl_init();
-
         curl_setopt($curl, CURLOPT_URL, $url);
-
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
         $response = curl_exec($curl);
-
         curl_close($curl);
 
         $data = json_decode($response, true);
 
-        if ($data) {
-            return [
+        if ($data && isset($data['country_code2'], $data['city'], $data['state_prov'])) {
+            $result = [
                 'country_code' => $data['country_code2'],
                 'city' => rawurlencode($data['city']),
                 'region' => rawurlencode($data['state_prov'])
             ];
+            file_put_contents($cache_file, json_encode($result));
+            return $result;
         }
-        
+
         return [];
     }
 
     public function getUserWeather($local) {
 
-        //$cacheUserWeather = 'user_weather_' . md5($local);
+        $cache_dir = dirname(__FILE__) . '/cache/';
+        if (!is_dir($cache_dir)) {
+            mkdir($cache_dir, 0755, true);
+        }
+        $cache_file = $cache_dir . 'user_weather_' . md5($local['city'] . '_' . $local['country_code']) . '.json';
+        $cache_time = 600; // 10 minutos
+
+        if (file_exists($cache_file) && (time() - filemtime($cache_file) < $cache_time)) {
+            $data = file_get_contents($cache_file);
+            return json_decode($data, true);
+        }
 
         $weatherApiKey = Configuration::get('apikey');
-
         $weatherEndpoint = 'https://api.openweathermap.org/data/2.5/weather?';
-
-        $query = 'q='.$local['city'].','.$local['country_code'];
-
+        $query = 'q=' . $local['city'] . ',' . $local['country_code'];
         $shop_lang = Context::getContext()->language->iso_code;
-
-        $url = $weatherEndpoint.$query.'&APPID='.$weatherApiKey.'&units=metric&lang='.$shop_lang;
+        $url = $weatherEndpoint . $query . '&APPID=' . $weatherApiKey . '&units=metric&lang=' . $shop_lang;
 
         $curl = curl_init();
-
         curl_setopt($curl, CURLOPT_URL, $url);
-
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
         $response = curl_exec($curl);
-
         curl_close($curl);
 
         $data = json_decode($response, true);
+
+        if ($data && isset($data['weather'])) {
+            file_put_contents($cache_file, $response);
+        }
 
         return $data;
     }

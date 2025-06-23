@@ -32,10 +32,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const rejectCookies = document.querySelector('#cookiesRejected');
     const popupOverlay = document.querySelector('.cookies-overlay');
 
-    if (getCookie('consent_cookies') !== '') {
-        cookiesBanner.style.display = 'none';
-        if (popupOverlay) popupOverlay.style.display = 'none';
-        return;
+    if (getCookie('consent_cookies') === '') {
+        cookiesBanner.style.display = 'flex';
+        if (popupOverlay) popupOverlay.style.display = 'block';
     }
 
     if (acceptCookies) {

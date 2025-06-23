@@ -115,7 +115,12 @@ class Csvimporter extends Module
                 $this->context->controller->errors[] = $this->l('El archivo debe ser en formato CSV (.csv)');
             }
 
-            $this->processCSV($csv);
+            if($this->context->controller->errors) {
+                $this->context->controller->errors;
+            }
+            else {
+                $this->processCSV($csv);
+            }
 
         }
     }
